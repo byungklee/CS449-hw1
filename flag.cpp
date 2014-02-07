@@ -1,3 +1,5 @@
+//Name: Byung Lee
+//012522664
 #include <GL/glut.h>
 #include <math.h>
 #define PI 3.1415
