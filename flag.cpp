@@ -1,4 +1,5 @@
 //Byung Lee
+//Name: Byung Lee
 //012522664
 #include <GL/glut.h>
 #include <math.h>
