@@ -1,3 +1,5 @@
+//Byung Lee
+//012522664
 #include <GL/glut.h>
 #include <math.h>
 #define PI 3.1415
@@ -176,6 +178,50 @@ void flag() {
 	for(int i = 180; i<=360; i++) {
 			glVertex2f(80 + 20 * cos(i*PI/180), 75 + 20 * sin(i*PI/180));
 	}
+	glEnd();	
+	glColor3f(0,0,0);
+	glLineWidth(1);
+	glBegin(GL_LINES);
+		glVertex2i(70,20);
+		glVertex2i(70,10);
+		glVertex2i(80,20);
+		glVertex2i(70,15);
+		glVertex2i(80,10);
+		glVertex2i(70,15);
+		glVertex2i(85,20);
+		glVertex2i(90,20);
+		glVertex2i(90,20);
+		glVertex2i(90,10);
+		glVertex2i(90,10);
+		glVertex2i(85,10);
+		glVertex2i(85,10);
+		glVertex2i(85,20);
+		glVertex2i(95,15);
+		glVertex2i(95,20);
+		glVertex2i(95,20);
+		glVertex2i(100,20);
+		glVertex2i(100,20);
+		glVertex2i(100,15);
+		glVertex2i(100,15);
+		glVertex2i(95,15);
+		glVertex2i(95,15);
+		glVertex2i(95,10);
+		glVertex2i(95,15);
+		glVertex2i(100,10);
+		glVertex2i(105,20);
+		glVertex2i(105,10);
+		glVertex2i(105,10);
+		glVertex2i(110,10);
+		glVertex2i(105,15);
+		glVertex2i(110,15);
+		glVertex2i(105,20);
+		glVertex2i(110,20);
+		glVertex2i(117,20);
+		glVertex2i(115,10);
+		glVertex2i(117,20);
+		glVertex2i(120,10);
+		glVertex2i(116,15);
+		glVertex2i(119,15);
 	glEnd();
 	glFlush();
 }
