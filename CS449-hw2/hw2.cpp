@@ -1,3 +1,7 @@
+//Byung Lee
+//012522664
+//HW2
+
 /* simple painting program with text, lines, triangles,
 rectangles, and points */
 
