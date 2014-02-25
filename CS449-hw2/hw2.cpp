@@ -201,7 +201,7 @@ void mouse(int btn, int state, int x, int y)
     else glBegin(GL_LINE_LOOP);
     glVertex2i(x, wh-y);
     glVertex2i(x, wh-yp[0]);
-    glVertex2i(xp[0],wh-yp[0]);
+    glVertex2i(xp[0]+1,wh-yp[0]+1);
     glVertex2i(xp[0],wh-y);
     glEnd();
     draw_mode=0;
