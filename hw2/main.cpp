@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 using namespace std;
 
 
@@ -42,33 +43,11 @@ bool isItConcave(vector* vt, int index) {
 // creating size 2 cube
 // two points (1,1,1) (3,3,3)
 bool isInsideACube(vector* co,int index, vector point) {
-	vector vt[4];
-	vt[0].x = co[1].x-co[0].x;
-	vt[0].y = co[1].y-co[0].y;
-	vt[0].z = co[1].z-co[0].z;
-	cout << vt[0].x << vt[0].y << vt[0].z << endl;
-	//from point 0
-	
-	vt[1].x = co[2].x-co[3].x;
-	vt[1].y = co[2].y-co[3].y;
-	vt[1].z = co[2].z-co[3].z;
-	cout << vt[1].x << vt[1].y << vt[1].z << endl;
-	//from point 3
-
-	vt[2].x = co[5].x-co[4].x;
-	vt[2].y = co[5].y-co[4].y;
-	vt[2].z = co[5].z-co[4].z;
-	cout << vt[2].x << vt[2].y << vt[2].z << endl;
-	//from point 4
-
-	vt[3].x = co[6].x-co[7].x;
-	vt[3].y = co[6].y-co[7].y;
-	vt[3].z = co[6].z-co[7].z;
-	cout << vt[3].x << vt[3].y << vt[3].z << endl;
-	//from point 7
-
-	cout <<point.x << point.y << point.z << endl;
-
+	if(co[0].x <= point.x && co[1].x >= point.x &&
+	   co[0].y <= point.y && co[4].y >= point.y &&
+	   co[0].z <= point.z && co[7].z >= point.z)
+		return true;
+	return false;
 }
 
 int main(int argc, char** argv) {
@@ -115,8 +94,8 @@ point2.x = 3;
 point2.y = 3;
 point2.z = 3;
 
-isInsideACube(coordinates,8,point1);
-
+cout << isInsideACube(coordinates,8,point1) << endl;
+cout << isInsideACube(coordinates,8,point2) << endl;
 
 
 
