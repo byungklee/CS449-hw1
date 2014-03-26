@@ -9,15 +9,10 @@ GLfloat ywcMin = 0.0, ywcMax = 225.0;
 
 int gAngle = 0.0;
 
+
 class wcPt2D {
 public: 
 	GLfloat x, y;
-};
-
-class ThreeSpokeswheel {
-public:
-	wcPt2D circle;
-	wcPt2D spoke;	
 };
 
 typedef GLfloat Matrix3x3 [3][3];
@@ -124,7 +119,7 @@ void triangle (wcPt2D *verts) {
 
 void drawFrame() {
 	glLineWidth(15);
-	glColor3f(0,0,0);
+	glColor3f(0,0,1);
 	glBegin(GL_LINES);
 		glVertex2f(70,95);
 		glVertex2f(134,95);
@@ -148,15 +143,65 @@ void drawFrame() {
 }
 
 void drawRearGear() {
+	//50,50
+	glLineWidth(2);
+	glColor3f(0.3,0.3,0.3);
+	glBegin(GL_LINE_STRIP);
+		//for(int i = 0; i <= 360; i = i + 10) {
+		
+		//}
+		int counter = 0;
+		int i = 3 * gAngle;
+		while(counter != 37) {
+			
+		if(counter % 2 == 0) {
+			glVertex2f(50 + 3 * cos(i*pi/180), 50 + 3 * sin(i*pi/180));
+		}
+		else
+			glVertex2f(50 + 4 * cos(i*pi/180), 50 + 4 * sin(i*pi/180));	
 
+
+		counter++;
+		i = i + 10;
+		}
+	glEnd();
 }
 
 void drawFrontGear() {
+glLineWidth(2);
+glColor3f(0.3,0.3,0.3);
+	glBegin(GL_LINE_STRIP);
+		
+		int counter = 0;
+		int i = gAngle;
+		while(counter != 37) {
+			
+		if(counter % 2 == 0) {
+			glVertex2f(90 + 9 * cos(i*pi/180), 50 + 9 * sin(i*pi/180));
+		}
+		else
+			glVertex2f(90 + 10 * cos(i*pi/180), 50 + 10 * sin(i*pi/180));	
 
+
+		counter++;
+		i = i + 10;
+		}
+	glEnd();
+}
+
+void drawChain() {
+	glLineWidth(2);
+	glColor3f(0.3,0.3,0.3);
+	glBegin(GL_LINES);
+	 glVertex2f(50,53);
+	 glVertex2f(90,60);
+	 glVertex2f(50,47);
+	 glVertex2f(90,40);
+	glEnd();
 }
 
 void drawWheel(wcPt2D *verts, int bigRadius, int currentAngle) {
-	glLineWidth(8);
+	glLineWidth(3);
 	glColor3f(0,0,0);
 	glBegin(GL_LINE_STRIP);
 		//for(int i = 0; i <= 360; i = i + 10) {
@@ -197,27 +242,9 @@ void drawWheel(wcPt2D *verts, int bigRadius, int currentAngle) {
 }
 
 void displayFcn(void) {
-	GLint nVerts = 3;
-	wcPt2D verts[3] = { {50.0, 25.0}, {150.0,25.0}, {100.0,100.0}};
-
-	wcPt2D centroidPt;
 
 	wcPt2D circle1[1] = {50,50};
 	wcPt2D circle2[1] = {150,50};	
-
-	GLint k, xSum = 0, ySum = 0;
-	for (k =0;k<nVerts;k++) {
-		xSum += verts[k].x;
-		ySum += verts[k].y;
-	}
-	centroidPt.x = GLfloat (xSum)/GLfloat(nVerts);
-	centroidPt.y = GLfloat (ySum)/GLfloat(nVerts);
-
-	wcPt2D pivPt, fixedPt;
-	pivPt = centroidPt;
-	fixedPt = centroidPt;
-	ThreeSpokeswheel rearWheel;
-	ThreeSpokeswheel frontWheel;
 
 	GLfloat tx = 0.0, ty = 100.0;
 	GLfloat sx = 1.5, sy = 1.5;
@@ -227,20 +254,16 @@ void displayFcn(void) {
 	glColor3f(0.0,0.0,1.0);
 	//triangle(verts);
 
-	matrix3x3SetIdentity(matComposite);
+	drawWheel(circle1, 30, 3*gAngle);
+	drawWheel(circle2, 30, 3*gAngle);
+	drawRearGear();
 
-	drawWheel(circle1, 30, gAngle);
-	drawWheel(circle2, 30, gAngle);
-	gAngle = (gAngle + 1) % 360;
-
-	scale2D(sx,sy,fixedPt);
-	rotate2D(pivPt, theta);
-	translate2D(tx,ty);
-
-	transformVerts2D(nVerts, verts);
+	gAngle = (gAngle - 1) % 360;
 	glColor3f(1.0,0.0,0.0);
 	//triangle(verts);
 	drawFrame();
+		drawFrontGear();
+		drawChain();
 
 	glFlush();
 	glutPostRedisplay(); // make it animation! 
@@ -259,7 +282,7 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(50,50);
 	glutInitWindowSize(winWidth, winHeight);
-	glutCreateWindow("Geometric Transformation Sequence");
+	glutCreateWindow("Program#3");
 	init();
 	glutDisplayFunc(displayFcn);
 	glutReshapeFunc(winReshapeFcn);
