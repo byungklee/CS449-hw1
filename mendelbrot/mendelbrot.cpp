@@ -128,6 +128,15 @@ void mouse(int button, int state, int x, int y) {
 			glLogicOp(GL_XOR);
 			first = 0;
 	}else if(button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+			glRectf(mx,my,mmx,mmy);
+			glFlush();
+			glColor3f(0.0,1.0,0.0);
+			glLogicOp(GL_COPY);
+			mmx = x;
+			mmy = 500-y;
+			glLogicOp(GL_COPY);
+			glRectf(xm,ym,xmm,ymm);
+			glFlush();
 			
 			
 	}if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
