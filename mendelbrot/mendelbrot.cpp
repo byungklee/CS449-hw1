@@ -17,6 +17,7 @@ struct color { GLfloat r,g,b,;};
 void init(void)
 {
 	glClearColor (1.0,1.0,1.0,0.0);
+	glEnable(GL_COLOR_LOGIC_OP);
 }
 
 void plotPoint (complexNum z) {
@@ -116,13 +117,36 @@ int zoom = 4;
 
 //GLfloat xComplexMin = -2.00, xComplexMax = 0.50;
 //GLfloat yComplexMin = -1.25, yComplexMax = 1.25;
+int first =0;
+float mx,my,mmx,mmy;
 void mouse(int button, int state, int x, int y) {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+			std::cout << "eher" <<std::endl;
+			mx=x;
+			my=500-y;
+			glColor3f(0.0,0.0,1.0);
+			glLogicOp(GL_XOR);
+			first = 0;
+	}else if(button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+			
+			
+	}if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
 			std::cout << "eher" <<std::endl;
 			glScalef(2,2,2);
 			displayFcn();
 			glFlush();
 	}
+}
+void move(int x,int y) {
+	if(first == 1) {
+		glRectf(xm,ym,xmm,ymm)
+		glFlush();
+	}
+	xmm = x;
+	ymm = 500 -y;
+	glRectf(xm,ym,xxm,ymm);
+	glFlush();
+	first = 1;
 }
 
 int main(int argc, char** argv) {
@@ -135,6 +159,7 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(displayFcn);
 	glutReshapeFunc(winReshapeFcn);
 	glutMouseFunc(mouse);
+	glutMotionFunc(move);
 	glutMainLoop();
 
 	return 0;
