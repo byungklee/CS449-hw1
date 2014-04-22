@@ -139,12 +139,12 @@ void mouse(int button, int state, int x, int y) {
 }
 void move(int x,int y) {
 	if(first == 1) {
-		glRectf(xm,ym,xmm,ymm)
+		glRectf(mx,my,mmx,mmy);
 		glFlush();
 	}
-	xmm = x;
-	ymm = 500 -y;
-	glRectf(xm,ym,xxm,ymm);
+	mmx = x;
+	mmy = 500 -y;
+	glRectf(mx,my,mmx,mmy);
 	glFlush();
 	first = 1;
 }
