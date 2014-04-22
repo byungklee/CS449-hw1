@@ -1,5 +1,6 @@
 #include <GL/glut.h>
 #include <iostream>
+#include <math.h>
 
 GLsizei winWidth = 500, winHeight =500;
 GLfloat xComplexMin = -2.00, xComplexMax = 0.50;
@@ -96,8 +97,9 @@ void mandelbrot ( GLint nx, GLint ny, GLint maxIter ) {
 		
 }
 
+GLint nx =500, ny = 500, maxIter=100;
 void displayFcn(void) {
-	GLint nx =1000, ny=1000, maxIter=1000;
+	
 	glClear(GL_COLOR_BUFFER_BIT);
 	mandelbrot(nx,ny,maxIter);
 	
@@ -121,39 +123,87 @@ int first =0;
 float mx,my,mmx,mmy;
 void mouse(int button, int state, int x, int y) {
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-			std::cout << "eher" <<std::endl;
-			mx=x;
-			my=500-y;
-			glColor3f(0.0,0.0,1.0);
+			std::cout << "Mouse lef down " << x << " " << y << std::endl;
+			mx=(x/500.0)*2.5 - 2.0;
+			my=(500.0-y)/500.0*2.5 - 1.25;
+					std::cout << "mx,my: " << mx << " " << my << std::endl;
+
+			glColor3f(0.0,1.0,1.0);
+			// glBegin(GL_LINES);
+			// 	glVertex2f(mx/500-0.2,1);
+			// 	glVertex2f(1.5,1.25);
+
+			// glEnd();
 			glLogicOp(GL_XOR);
 			first = 0;
 	}else if(button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
-			glRectf(mx,my,mmx,mmy);
+		std::cout << "Mouse lef up" <<std::endl;
+			//glRectf(mx,my,mmx,mmy);
+			//glFlush();
+			//glColor3f(1.0,1.0,0.0);
+		glBegin(GL_LINE_LOOP); 
+			glVertex2f(mx,my);
+			glVertex2f(mmx,my);
+			glVertex2f(mmx,mmy);
+			glVertex2f(mx,mmy);
+			glEnd();
+		glFlush();
+
+			
+
+			mmx=x/500.0*2.5 - 2.0;
+			mmy=(500.0-y)/500.0*2.5 - 1.25;
+			
+			glBegin(GL_LINE_LOOP); 
+			glVertex2f(mx,my);
+			glVertex2f(mmx,my);
+			glVertex2f(mmx,mmy);
+			glVertex2f(mx,mmy);			
+			glEnd();
 			glFlush();
-			glColor3f(0.0,1.0,0.0);
-			glLogicOp(GL_COPY);
-			mmx = x;
-			mmy = 500-y;
-			glLogicOp(GL_COPY);
-			glRectf(xm,ym,xmm,ymm);
+			glBegin(GL_LINE_LOOP); 
+			glVertex2f(mx,my);
+			glVertex2f(mmx,my);
+			glVertex2f(mmx,mmy);
+			glVertex2f(mx,mmy);
+			glEnd();
 			glFlush();
 			
+			glLogicOp(GL_COPY);
+			glPushMatrix();
+			glLoadIdentity();
+			glOrtho(mx,mmx,my,mmy,-1,1);
+			displayFcn();			
+
+//glPopMatrix();
+			glFlush();
+
 			
 	}if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-			std::cout << "eher" <<std::endl;
-			glScalef(2,2,2);
-			displayFcn();
+			std::cout << "Mouse right down" <<std::endl;
+			glPopMatrix();			
 			glFlush();
 	}
 }
 void move(int x,int y) {
 	if(first == 1) {
-		glRectf(mx,my,mmx,mmy);
+		glBegin(GL_LINE_LOOP); 
+			glVertex2f(mx,my);
+			glVertex2f(mmx,my);
+			glVertex2f(mmx,mmy);
+			glVertex2f(mx,mmy);
+			glEnd();
 		glFlush();
 	}
-	mmx = x;
-	mmy = 500 -y;
-	glRectf(mx,my,mmx,mmy);
+	mmx=x/500.0*2.5 - 2.0;
+	mmy=(500.0-y)/500.0*2.5 - 1.25;
+					std::cout << "mmx,mmy " << mmx << " " << mmy << std::endl;
+	glBegin(GL_LINE_LOOP); 
+			glVertex2f(mx,my);
+			glVertex2f(mmx,my);
+			glVertex2f(mmx,mmy);
+			glVertex2f(mx,mmy);
+			glEnd();
 	glFlush();
 	first = 1;
 }
